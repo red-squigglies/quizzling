@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:quizzling/widgets/login_form.dart';
+
 class Login extends StatelessWidget {
   const Login({super.key});
   @override
@@ -22,6 +24,13 @@ class Login extends StatelessWidget {
         ),
         backgroundColor: Colors.white,
         elevation: 0,
+      ),
+      body: const Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          LoginForm(),
+        ],
       ),
     );
   }

@@ -16,7 +16,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData().copyWith(
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: const Login(),
+      home: GestureDetector(
+        onTap: () {
+          FocusManager.instance.primaryFocus!.unfocus();
+        },
+        child: const Login(),
+      ),
     );
   }
 }
