@@ -1,145 +1,101 @@
 import 'package:flutter/material.dart';
 
-import 'package:quizzling/widgets/styled_button.dart';
+import 'package:quizzling/widgets/quiz_button.dart';
+import 'package:quizzling/widgets/quiz_password_field.dart';
+import 'package:quizzling/widgets/quiz_text_field.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
 
   @override
-  State<LoginForm> createState() {
-    return _LoginFormState();
-  }
+  State<LoginForm> createState() => _LoginFormState();
 }
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
 
-  bool _isObscured = true;
-  String _userName = '';
-  String _userPassword = '';
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   void login() {
     if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      print(_userName);
-      print(_userPassword);
+      // TODO: handle login
     }
   }
 
   @override
-  Widget build(BuildContext context) {
-    const textFieldBorder = OutlineInputBorder(
-      borderSide: BorderSide(
-        color: Colors.black,
-        width: 2,
-      ),
-    );
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(25),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 300,
-              height: 70,
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  floatingLabelStyle: TextStyle(
-                    color: Colors.black,
-                  ),
-                  focusedBorder: textFieldBorder,
-                  errorBorder: textFieldBorder,
-                  focusedErrorBorder: textFieldBorder,
-                  enabledBorder: textFieldBorder,
-                ),
-                style: const TextStyle(fontSize: 20),
-                keyboardType: TextInputType.emailAddress,
-                autocorrect: false,
-                validator: (username) {
-                  if (username == null || username.trim().isEmpty) {
-                    return 'Username must be filled';
-                  }
-                  return null;
-                },
-                onSaved: (newUsername) {
-                  _userName = newUsername!;
-                },
-              ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            SizedBox(
-              width: 300,
-              height: 70,
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Password',
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _isObscured = !_isObscured;
-                      });
-                    },
-                    icon: Icon(
-                      (_isObscured)
-                          ? Icons.visibility_outlined
-                          : Icons.visibility_off_outlined,
-                      color: Colors.black,
-                    ),
-                  ),
-                  focusedBorder: textFieldBorder,
-                  errorBorder: textFieldBorder,
-                  focusedErrorBorder: textFieldBorder,
-                  enabledBorder: textFieldBorder,
-                ),
-                style: const TextStyle(fontSize: 20),
-                autocorrect: false,
-                obscureText: _isObscured,
-                validator: (password) {
-                  if (password == null || password.trim().isEmpty) {
-                    return 'Password must be filled';
-                  }
-                  return null;
-                },
-                onSaved: (newPassword) {
-                  _userPassword = newPassword!;
-                },
-              ),
-            ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: TextButton(
-                onPressed: () {},
-                child: const Text('Forgot password',
-                    style: TextStyle(color: Colors.black)),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            //Custom styled button
-            StyledButtton(onPressed: login),
-            TextButton(
-              onPressed: () {},
-              style: TextButton.styleFrom(
-                alignment: Alignment.center,
-              ),
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          QuizTextField(
+            labelText: 'Email',
+            controller: _emailController,
+            keyboardType: TextInputType.emailAddress,
+            autocorrect: false,
+            validator: (email) {
+              if (email == null || email.trim().isEmpty) {
+                return 'Email is required';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 16),
+          QuizPasswordField(
+            labelText: 'Password',
+            controller: _passwordController,
+            validator: (password) {
+              if (password == null || password.trim().isEmpty) {
+                return 'Password is required';
+              }
+              return null;
+            },
+          ),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: TextButton(
+              onPressed: () {
+                // TODO: navigate to reset password screen.
+              },
               child: const Text(
-                'Don\'t have an account',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                ),
+                'Forgot password',
+                style: TextStyle(color: Colors.black),
               ),
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 12),
+          QuizButton(
+            onPressed: login,
+            text: 'Login',
+          ),
+          const SizedBox(height: 16),
+          TextButton(
+            onPressed: () {
+              // TODO: navigate to sign up screen.
+            },
+            style: TextButton.styleFrom(
+              alignment: Alignment.center,
+            ),
+            child: const Text(
+              "Don't have an account",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

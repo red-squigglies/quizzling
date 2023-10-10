@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 
-import 'package:quizzling/screens/login.dart';
+import 'package:quizzling/screens/login_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const QuizzlingApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class QuizzlingApp extends StatelessWidget {
+  const QuizzlingApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Quizzling',
-      theme: ThemeData().copyWith(
-        scaffoldBackgroundColor: Colors.white,
-      ),
+      theme: Theme.of(context).copyWith(scaffoldBackgroundColor: Colors.white),
       home: GestureDetector(
         onTap: () {
-          FocusManager.instance.primaryFocus!.unfocus();
+          FocusManager.instance.primaryFocus?.unfocus();
         },
         child: const Login(),
       ),
