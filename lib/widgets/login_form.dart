@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzling/utils/vlad.dart';
 
 import 'package:quizzling/widgets/quiz_button.dart';
 import 'package:quizzling/widgets/quiz_password_field.dart';
@@ -45,10 +46,10 @@ class _LoginFormState extends State<LoginForm> {
             keyboardType: TextInputType.emailAddress,
             autocorrect: false,
             validator: (email) {
-              if (email == null || email.trim().isEmpty) {
-                return 'Email is required';
-              }
-              return null;
+              return Vlad(email)
+                  .mandatory('Email is required')
+                  .email('Please enter a valid email')
+                  .error;
             },
           ),
           const SizedBox(height: 16),
@@ -56,10 +57,13 @@ class _LoginFormState extends State<LoginForm> {
             labelText: 'Password',
             controller: _passwordController,
             validator: (password) {
-              if (password == null || password.trim().isEmpty) {
-                return 'Password is required';
-              }
-              return null;
+              return Vlad(password)
+                  .mandatory('Password is required')
+                  .minLength(
+                    6,
+                    'The password must be at least 6 characters long',
+                  )
+                  .error;
             },
           ),
           Align(
