@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "966993741392",
+    "project_id": "quizzling-app",
+    "storage_bucket": "quizzling-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:966993741392:android:6e1295b9788bb5a89ab355",
+        "android_client_info": {
+          "package_name": "com.example.quizzling"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD66MbWkaUycePmHzAkPVjwu-9nhtaOMB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
