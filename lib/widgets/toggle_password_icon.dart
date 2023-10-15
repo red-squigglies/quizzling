@@ -13,6 +13,7 @@ class TogglePasswordIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      tooltip: visible ? 'Hide Password' : 'Show Password',
       onPressed: () => onToggle(!visible),
       icon: Icon(
         visible ? Icons.visibility_outlined : Icons.visibility_off_outlined,
