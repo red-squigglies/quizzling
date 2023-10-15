@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quizzling/core/authentication.dart';
+import 'package:quizzling/core/firebase_authentication.dart';
+import 'package:quizzling/models/user_model.dart';
 import 'package:quizzling/utils/vlad.dart';
 
 import 'package:quizzling/widgets/quiz_button.dart';
@@ -13,16 +16,12 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  var _isLoading = false;
+
   final _formKey = GlobalKey<FormState>();
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-
-  void login() {
-    if (_formKey.currentState!.validate()) {
-      // TODO: handle login
-    }
-  }
 
   @override
   void dispose() {
@@ -30,6 +29,35 @@ class _LoginFormState extends State<LoginForm> {
     _passwordController.dispose();
 
     super.dispose();
+  }
+
+  Future<void> login() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      Authentication auth = FirebaseAuthentication();
+
+      final UserModel user = await auth.signIn(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+
+      debugPrint(user.toString());
+
+      // TODO: save the user.
+      // TODO: navigate to home screen.
+    } catch (e) {
+      // TODO: handle the errors
+      print(e);
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
@@ -80,6 +108,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: 12),
           QuizButton(
+            loading: _isLoading,
             onPressed: login,
             text: 'Login',
           ),
